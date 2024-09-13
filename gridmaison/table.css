@@ -1,0 +1,61 @@
+#product-table	{
+	/*margin-bottom: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;        */
+	}
+#product-table	td a	{
+	color: #393939;
+        font-size: 8pt;
+        font-family: Verdana;
+	}
+#product-table	td a:hover	{
+	text-decoration: underline;
+	}
+#product-table	th	{
+        background: #CAE1FF;
+        color: black;
+	height: 15px;
+	text-align: center;       
+        font-size: 8pt;
+        font-family: Verdana;        
+	}
+#product-table	.minwidth-1	{
+	/*min-width: 110px;*/
+	}
+#product-table td	{
+
+	border: 1px solid #d2d2d2;
+	/*padding: 5px 0 5px 5px;*/
+        text-align: center;
+        color: black;
+        font-family: Verdana;
+        font-size: 8pt;
+        height: 15px;
+	}
+     
+#product-table tr.alternate-row	{
+	background: #ececec;
+	}
+        
+        #teste{
+            -moz-border-radius: 12px;
+            -webkit-border-radius: 12px;
+            border-radius: 12px;
+           /* filter: progid: DXImageTransform.Microsoft.gradient(startColorstr = '#7a84ff', endColorstr = '#000000');
+            -ms-filter: "progid: DXImageTransform.Microsoft.gradient(startColorstr = '#7a84ff', endColorstr = '#000000')";
+            background-image: -moz-linear-gradient(top, #7a84ff, #000000);
+            background-image: -ms-linear-gradient(top, #7a84ff, #000000);
+            background-image: -o-linear-gradient(top, #7a84ff, #000000);
+            background-image: -webkit-gradient(linear, center top, center bottom, from(#7a84ff), to(#000000));
+            background-image: -webkit-linear-gradient(top, #7a84ff, #000000);
+            background-image: linear-gradient(top, #7a84ff, #000000);
+            -moz-background-clip: padding;
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            opacity: 0.95;
+            -ms-filter: progid: DXImageTransform.Microsoft.Alpha(Opacity = 95);
+            filter: alpha(opacity = 95);  */
+
+
+
+        }

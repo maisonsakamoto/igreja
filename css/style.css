@@ -357,5 +357,28 @@ body {
 }
 
 .marginBottom10{
-    margin-bottom:10px 
+    margin-bottom:10px
+}
+
+/* Estilos para as tabelas do plano de contas */
+#table_grupos, #table_contas {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#table_grupos tr:nth-child(even), #table_contas tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#table_grupos td, #table_contas td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+#table_grupos td:first-child, #table_contas td:first-child {
+    background-color: #e6f3ff;
+}
+
+#table_grupos td:nth-child(2), #table_contas td:nth-child(2) {
+    background-color: #fff0f0;
 }

@@ -1,0 +1,79 @@
+/* Maison K. Sakamoto - 27/01/2016 - Criação do Arquivo Baseado no sistema do http://materializecss.com/grid.html */
+
+/* Definições globais */
+#conteudo    { padding: 5px 0 10px 0; overflow: hidden; }
+.habilitado  { background: #f5f5dc; }
+.desabilitado{ background: #eaefef; }
+
+.cor-verde     , .jqx-grid-cell.cor-verde      { background: #B4EEB4; }
+.cor-verde02   , .jqx-grid-cell.cor-verde02    { background: #006400; color: white;}
+.cor-vermelho  , .jqx-grid-cell.cor-vermelho   { background: #EE4000; }
+.cor-vermelho02, .jqx-grid-cell.cor-vermelho02 { background: #FFA87D; }
+.cor-vermelho03, .jqx-grid-cell.cor-vermelho03 { background: #EE4000; color: white; }
+.cor-amarelo   , .jqx-grid-cell.cor-amarelo    { background: #ffff81; }
+.cor-amarelo02 , .jqx-grid-cell.cor-amarelo02  { background: #fef101; }
+.cor-azul      , .jqx-grid-cell.cor-azul       { background: #87ceeb; }
+.cor-azul02    , .jqx-grid-cell.cor-azul02     { background: #167499; color: white; }
+.cor-laranja   , .jqx-grid-cell.cor-laranja    { background: #ffa84c; }
+
+.hide, .hidden                  { display: none;}
+.editavel, .jqx-widget .editavel{ color: #890205; background-color: #fff4df; font-weight: bold; }
+
+.align_center, .text-center, .txt-center{ text-align: center; }
+.align_right, .text-right, .txt-right{ text-align: right; }
+.align_left, .text-left, .txt-left{ text-align: left; }
+
+/*  Ripple */
+.legend              { color: #ffffff; background: #CC0000; }
+.legend-sub          { color: #ffffff; background: #808080; }
+.legend, .legend-sub { box-shadow: 0 2px 5px 0 #00000029, 0 2px 10px 0 #0000001f; width: 100%; border: none; padding: 10px !important; text-align: center; font-weight: bold; font-size: 13px; margin: -10px 0 5px -10px; font-family: Verdana; }
+.card                                       { box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); border: none; padding: 10px !important; margin: 10px auto 8px; }
+.card input[type=text] { border-style: none none solid; font-size: 1rem; margin: 0 0 15px; transition: all 0.3s ease 0s; width: 100%; text-transform: uppercase; }
+.card input[type=text]:focus:not([readonly]){ border-bottom: 1px solid #26a69a; box-shadow: 0 1px 0 0 #26a69a; outline: none; }
+.card fieldset > input{ width: 100%; border-radius: 6px; height: 20px; font-weight: bold; font-size: 12px; }
+.card fieldset textarea{ width: 100%; }
+.row { clear: both; display: table; content: ""; width: 100%; margin: auto !important; }
+.row button { width: 100%; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); transition: all 0.3s ease-out 0s; overflow: hidden !important; font-size: 8pt; }
+.row button:hover { color: #cc0000; box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15); }
+.row .col    { float: left; box-sizing: border-box; padding: 0 0.75rem; }
+.row .col.s12{ width: 100%      }
+.row .col.s11{ width: 91.6667%  }
+.row .col.s10{ width: 83.3333%  }
+.row .col.s9 { width: 75%       }
+.row .col.s8 { width: 66.6667%  }
+.row .col.s7 { width: 58.3333%  }
+.row .col.s6 { width: 50%       }
+.row .col.s5 { width: 41.6667%; }
+.row .col.s4 { width: 33.3333%  }
+.row .col.s3 { width: 25%       }
+.row .col.s2 { width: 16.6667%  }
+.row .col.s1 { width: 8.3333%   }
+.row .col.offset-s12 { margin-left: 100%;     }
+.row .col.offset-s11 { margin-left: 91.6667%; }
+.row .col.offset-s10 { margin-left: 83.3333%; }
+.row .col.offset-s9  { margin-left: 75%;      }
+.row .col.offset-s8  { margin-left: 66.6667%; }
+.row .col.offset-s7  { margin-left: 58.3333%; }
+.row .col.offset-s6  { margin-left: 50%;      }
+.row .col.offset-s5  { margin-left: 41.6667%; }
+.row .col.offset-s4  { margin-left: 33.3333%; }
+.row .col.offset-s3  { margin-left: 25%;      }
+.row .col.offset-s2  { margin-left: 16.6667%; }
+.row .col.offset-s1  { margin-left: 8.3333%;  }
+.row .col.offset-s1  { margin-left: 8.3333%;  }
+.row .col.padding-0  { padding: 0;            }
+.row.hidden{ display: none; }
+.ripple-effect{ position: absolute; border-radius: 50%; width: 5px; height: 5px; background: black; animation: ripple-animation 1.2s; transform-origin: center; }
+@keyframes ripple-animation { from { transform: scale(1); opacity: 0.4; } to { transform: scale(100); opacity: 0; } }
+
+/* JQUERY-UI */
+.ui-datepicker { line-height: 1; z-index: 99999 !important; }
+.ui-buttonset .ui-button { box-shadow: 0 2px 5px 0 #00000029, 0 2px 10px 0 #0000001f; margin-left: 0; margin-right: -0.3em; transition: all 0.3s ease-out 0s; }
+.ui-buttonset .ui-button.ui-state-hover{ color: #cc0000; box-shadow: 0 5px 11px 0 #0000002e, 0 4px 15px 0 #00000026; }
+
+/* JQX-WIDGETS*/
+.jqx-grid-cell.jqx-fill-state-hover{ background: #FFAAAA; cursor: pointer; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); } /* HOVER DO GRID */
+.jqx-fill-state-pressed{ background: #87ceeb !important; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }                   /* LINHA SELECIONADA NO GRID */
+
+.marginTop10px{margin-top: 10px;}
+.waiting{ cursor: wait !important; }

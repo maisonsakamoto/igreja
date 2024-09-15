@@ -1,128 +1,221 @@
-var principal = {};
+/**
+ * PlanoContas
+ * @author: Maison K. Sakamoto - 15/09/2024
+ */
 
-principal.start = function() {
-    principal.eventos();
-    principal.carregarGrupos();
-};
+var PlanoContas = class PlanoContas {
+    constructor() {
+        this.start();
+    }
 
-principal.eventos = function() {
-    $('#table_grupos tr').on('click', function(e) {
-        e.stopImmediatePropagation();
-        $('.cor-selecionado').removeClass('cor-selecionado');
-        $(this).addClass('cor-selecionado');
+    start() {
+        this.carregarGrupos();
+        // this.eventos(); // carregar os eventos somente após carregar os grupos de contas
+    }
 
-        window.mostra_botoes();
-        var idi = $(this).find('div').attr('nr-id');
-        $('#bt_editar_grupo').attr('nr_id', idi);
-        $('#bt_nova_conta').attr('nr_id', idi);
-        $('#bt_novo_grupo').attr('nr_id', idi);
-        principal.carregarContas(idi);
-    });
+    eventos() {
+        $('#table_grupos tr').on('click', (e) => {
+            e.stopImmediatePropagation();
+            $('.cor-selecionado').removeClass('cor-selecionado');
+            $(e.currentTarget).addClass('cor-selecionado');
 
-    $('#bt_editar_grupo').click(function() {
-        console.info('Editar Grupo');
-        var idi = $(this).attr('nr_id');
-        console.log(idi);
-        var url = ("x-plano-contas/grupo_edita.php?nrid=" + idi);
-        $('#itens').load(url);
-        window.esconde_botoes();
-    });
+            const idi = $(e.currentTarget).find('div').attr('nr-id');
+            $('#bt_editar_grupo').attr('nr_id', idi);
+            $('#bt_nova_conta').attr('nr_id', idi);
+            $('#bt_novo_grupo').attr('nr_id', idi);
+            this.carregarContas(idi);
+        });
 
-    $('#bt_novo_grupo').click(function() {
-        console.info('Novo Grupo');
-        window.esconde_botoes();
-        var idi = $('#bt_editar_grupo').attr('nr_id');
-        console.log('numero idi' + idi);
-        var url = ("x-plano-contas/grupo_novo.php?nrid=" + idi);
-        $('#itens').load(url);
-    });
+        $('#bt_editar_grupo').click((e) => {
+            e.stopImmediatePropagation();
+            const idi = $(e.currentTarget).attr('nr_id');
+            const $grupoSelecionado = $('#table_grupos tr.cor-selecionado');
+            const grupoNome = $grupoSelecionado.find('td:eq(1) div').text();
 
-    $('#bt_nova_conta').click(function() {
-        console.info('Nova Conta');
-        window.esconde_botoes();
-        var idi = $(this).attr('nr_id');
-        console.log('numero do idi  ' + idi);
-        var url = ("x-plano-contas/contas_nova.php?nrid=" + idi);
-        $('#itens').load(url);
-    });
-};
+            const dialogContent = `
+                <form id="editarGrupoForm">
+                    <label for="grupoNome">Nome do Grupo:</label>
+                    <input type="text" id="grupoNome" name="grupoNome" value="${grupoNome}" required>
+                </form>
+            `;
 
-principal.carregarGrupos = function() {
-    $.ajax({
-        url: 'x-plano-contas/col_plano_contas.php',
-        method: 'GET',
-        dataType: 'json',
-        data: { funcao: 'getGrupos' },
-        success: function(data) {
-            principal.renderizarGrupos(data);
-        },
-        error: function(xhr, status, error) {
-            console.error('Erro ao carregar grupos:', error);
-        }
-    });
-};
+            const $tela = $('<div>').html(dialogContent);
+            $tela.dialog({
+                title: 'Editar Grupo',
+                modal: true,
+                width: 400,
+                buttons: {
+                    'Salvar': () => {
+                        const novoNome = $('#grupoNome').val();
+                        $.ajax({
+                            url: 'x-plano-contas/col_plano_contas.php',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: { funcao: 'editarGrupo', id: idi, nome: novoNome },
+                            success: () => {
+                                $grupoSelecionado.find('td:eq(1) div').text(novoNome);
+                                $tela.dialog('close');
+                            },
+                            error: () => { alert('Erro ao comunicar com o servidor'); }
+                        });
+                    },
+                    'Cancelar': function() { $(this).dialog('close'); }
+                },
+                close: function() { $(this).dialog('destroy').remove(); }
+            });
+        });
 
-principal.renderizarGrupos = function(grupos) {
-    var $table = $('<table id="table_grupos"></table>');
-    var primeiro = 0;
+        $('#bt_novo_grupo').click((e) => {
+            e.stopImmediatePropagation();
 
-    grupos.forEach(function(grupo) {
-        if (primeiro === 0) {
-            primeiro = 1;
-            $('<div>').attr({
-                id: 'nr_id',
-                'data-value': grupo.id_grupo
-            }).css('display', 'none').appendTo('body');
-        }
+            const dialogContent = `
+                <form id="novoGrupoForm">
+                    <label for="grupoNome">Nome do Novo Grupo:</label>
+                    <input type="text" id="grupoNome" name="grupoNome" required>
+                </form>
+            `;
 
-        var $tr = $('<tr>').addClass('hover info botao aciona');
-        var $tdId = $('<td>').css('width', '30%');
-        var $tdNome = $('<td>').css('width', '70%');
+            const $tela = $('<div>').html(dialogContent);
+            $tela.dialog({
+                title: 'Novo Grupo',
+                modal: true,
+                width: 400,
+                buttons: {
+                    'Salvar': () => {
+                        const novoNome = $('#grupoNome').val();
 
-        $('<div>').attr({'nr-id': grupo.id_grupo}).text(grupo.id_grupo).addClass('font02').appendTo($tdId);
+                        $.ajax({
+                            url: 'x-plano-contas/col_plano_contas.php',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: { funcao: 'novoGrupo', nome: novoNome },
+                            success: (response) => {
+                                if (response.success) {
+                                    this.carregarGrupos();
+                                    $tela.dialog('close');
+                                } else {
+                                    alert('Erro ao criar novo grupo: ' + response.message);
+                                }
+                            },
+                            error: () => { alert('Erro ao comunicar com o servidor'); }
+                        });
+                    },
+                    'Cancelar': function() { $(this).dialog('close'); }
+                },
+                close: function() { $(this).dialog('destroy').remove(); }
+            });
+        });
 
-        $('<div>').attr({'nr-id': grupo.id_grupo}).text(grupo.grupo_nome.substr(0, 50)).addClass('font02').appendTo($tdNome);
+        $('#bt_nova_conta').click((e) => {
+            e.stopImmediatePropagation();
+            console.info('Nova Conta');
 
-        $tr.append($tdId).append($tdNome);
-        $table.append($tr);
-    });
+            const grupoId = $(e.currentTarget).attr('nr_id');
+            console.log('ID do grupo: ' + grupoId);
 
-    $('#table_grupos').replaceWith($table);
-    principal.eventos();
-};
+            const dialogContent = `
+                <form id="novaContaForm">
+                    <label for="contaNome">Nome da Nova Conta:</label>
+                    <input type="text" id="contaNome" name="contaNome" required>
+                </form>
+            `;
 
-principal.carregarContas = function(grupoId) {
-    $.ajax({
-        url: 'x-plano-contas/col_plano_contas.php',
-        method: 'GET',
-        dataType: 'json',
-        data: { funcao: 'getContas', grupoId: grupoId },
-        success: function(data) {
-            principal.renderizarContas(data);
-        },
-        error: function(xhr, status, error) {
-            console.error('Erro ao carregar contas:', error);
-        }
-    });
-};
+            const $tela = $('<div>').html(dialogContent);
+            $tela.dialog({
+                title: 'Nova Conta',
+                modal: true,
+                width: 400,
+                buttons: {
+                    'Salvar': () => {
+                        const novoNome = $('#contaNome').val();
 
-principal.renderizarContas = function(contas) {
-    var $table = $('<table id="table_contas"></table>');
+                        $.ajax({
+                            url: 'x-plano-contas/col_plano_contas.php',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: { funcao: 'novaConta', nome: novoNome, grupoId: grupoId },
+                            success: (response) => {
+                                if (response.success) {
+                                    this.carregarContas(grupoId);
+                                    $tela.dialog('close');
+                                } else {
+                                    alert('Erro ao criar nova conta: ' + response.message);
+                                }
+                            },
+                            error: () => { alert('Erro ao comunicar com o servidor'); }
+                        });
+                    },
+                    'Cancelar': function() { $(this).dialog('close'); }
+                },
+                close: function() { $(this).dialog('destroy').remove(); }
+            });
+        });
+    }
 
-    contas.forEach(function(conta) {
-        var $tr = $('<tr>').addClass('hover info botao aciona');
-        var $tdId = $('<td>').css('width', '35px');
-        var $tdNome = $('<td>').css('width', '250px');
+    carregarGrupos() {
+        $.ajax({
+            url: 'x-plano-contas/col_plano_contas.php',
+            type: 'POST',
+            dataType: 'json',
+            data: { funcao: 'getGrupos' },
+            success: (data) => { this.renderizarGrupos(data); },
+            error: (xhr, status, error) => { console.error('Erro ao carregar grupos:', error); }
+        });
+    }
 
-        $('<div>').attr({'nr_id': conta.id_conta}).text(conta.id_conta).addClass('font02').appendTo($tdId);
+    renderizarGrupos(grupos) {
+        const $table = $('<table id="table_grupos"></table>');
+        grupos.forEach((grupo) => {
+            const $tr = $('<tr>').addClass('hover info botao aciona');
+            const $tdId = $('<td>').css('width', '30%');
+            const $tdNome = $('<td>').css('width', '70%');
 
-        $('<div>').attr({'nr_id': conta.id_conta}).text(conta.nome.substr(0, 50)).addClass('font02').appendTo($tdNome);
+            $('<div>').attr({'nr-id': grupo.id_grupo}).text(grupo.id_grupo).addClass('font02').appendTo($tdId);
+            $('<div>').attr({'nr-id': grupo.id_grupo}).text(grupo.grupo_nome.substr(0, 50)).addClass('font02').appendTo($tdNome);
 
-        $tr.append($tdId).append($tdNome);
-        $table.append($tr);
-    });
+            $tr.append($tdId).append($tdNome);
+            $table.append($tr);
+        });
 
-    $('#table_contas').replaceWith($table);
-};
+        $('#table_grupos').replaceWith($table);
+        this.eventos();
+    }
 
-principal.start();
+    carregarContas(grupoId) {
+        $.ajax({
+            url: 'x-plano-contas/col_plano_contas.php',
+            type: 'POST',
+            dataType: 'json',
+            data: { funcao: 'getContas', grupoId: grupoId },
+            success: (data) => { this.renderizarContas(data); },
+            error: (xhr, status, error) => { console.error('Erro ao carregar contas:', error); }
+        });
+    }
+
+    renderizarContas(contas) {
+        const $table = $('<table id="table_contas"></table>');
+
+        contas.forEach((conta) => {
+            const $tr = $('<tr>').addClass('hover info botao aciona');
+            const $tdId = $('<td>').css('width', '35px');
+            const $tdNome = $('<td>').css('width', '250px');
+
+            const $divId = $('<div>');
+            $divId.attr({'nr_id': conta.id_conta}).text(conta.id_contas);
+            $divId.attr('class', 'font02');
+            $divId.appendTo($tdId);
+            const $divNome = $('<div>');
+            conta.nome == null ? conta.nome = '' : conta.nome = conta.nome;
+            $divNome.attr({'nr_id': conta.id_conta}).text(conta.nome.substr(0, 50));
+            $divNome.attr('class', 'font02');
+            $divNome.appendTo($tdNome);
+
+            $tr.append($tdId).append($tdNome);
+            $table.append($tr);
+        });
+
+        $('#table_contas').replaceWith($table);
+    }
+}
+
+var planoContas = new PlanoContas();

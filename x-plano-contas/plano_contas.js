@@ -40,10 +40,7 @@ var PlanoContas = class PlanoContas {
             `;
 
             const $tela = $('<div>').html(dialogContent);
-            $tela.dialog({
-                title: 'Editar Grupo',
-                modal: true,
-                width: 400,
+            $tela.dialog({ title: 'Editar Grupo', modal: true, width: 400,
                 buttons: {
                     'Salvar': () => {
                         const novoNome = $('#grupoNome').val();
@@ -76,18 +73,12 @@ var PlanoContas = class PlanoContas {
             `;
 
             const $tela = $('<div>').html(dialogContent);
-            $tela.dialog({
-                title: 'Novo Grupo',
-                modal: true,
-                width: 400,
+            $tela.dialog({ title: 'Novo Grupo', modal: true, width: 400,
                 buttons: {
                     'Salvar': () => {
                         const novoNome = $('#grupoNome').val();
 
-                        $.ajax({
-                            url: 'x-plano-contas/col_plano_contas.php',
-                            type: 'POST',
-                            dataType: 'json',
+                        $.ajax({ url: 'x-plano-contas/col_plano_contas.php', type: 'POST', dataType: 'json',
                             data: { funcao: 'novoGrupo', nome: novoNome },
                             success: (response) => {
                                 if (response.success) {
@@ -121,18 +112,12 @@ var PlanoContas = class PlanoContas {
             `;
 
             const $tela = $('<div>').html(dialogContent);
-            $tela.dialog({
-                title: 'Nova Conta',
-                modal: true,
-                width: 400,
+            $tela.dialog({ title: 'Nova Conta', modal: true, width: 400,
                 buttons: {
                     'Salvar': () => {
                         const novoNome = $('#contaNome').val();
 
-                        $.ajax({
-                            url: 'x-plano-contas/col_plano_contas.php',
-                            type: 'POST',
-                            dataType: 'json',
+                        $.ajax({ url: 'x-plano-contas/col_plano_contas.php', type: 'POST', dataType: 'json',
                             data: { funcao: 'novaConta', nome: novoNome, grupoId: grupoId },
                             success: (response) => {
                                 if (response.success) {
@@ -153,10 +138,7 @@ var PlanoContas = class PlanoContas {
     }
 
     carregarGrupos() {
-        $.ajax({
-            url: 'x-plano-contas/col_plano_contas.php',
-            type: 'POST',
-            dataType: 'json',
+        $.ajax({ url: 'x-plano-contas/col_plano_contas.php', type: 'POST', dataType: 'json',
             data: { funcao: 'getGrupos' },
             success: (data) => { this.renderizarGrupos(data); },
             error: (xhr, status, error) => { console.error('Erro ao carregar grupos:', error); }
@@ -182,10 +164,7 @@ var PlanoContas = class PlanoContas {
     }
 
     carregarContas(grupoId) {
-        $.ajax({
-            url: 'x-plano-contas/col_plano_contas.php',
-            type: 'POST',
-            dataType: 'json',
+        $.ajax({ url: 'x-plano-contas/col_plano_contas.php', type: 'POST', dataType: 'json',
             data: { funcao: 'getContas', grupoId: grupoId },
             success: (data) => { this.renderizarContas(data); },
             error: (xhr, status, error) => { console.error('Erro ao carregar contas:', error); }

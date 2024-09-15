@@ -29,17 +29,17 @@
 //.ui-datepicker-calendar td.ui-datepicker-week-end a { background: yellow; text-align: center;  }
 //.ui-datepicker-calendar td.ui-datepicker-week-end { background: yellow; text-align: center;  } */
 
-.ui-widget.ui-widget-content{width: 450px;}  //  TAMANHO DO CALENDARIO
-.ui-datepicker td a { text-align: center; font-size: 30px;}  // INFDORMAÇOES DOS NUMEROS DOS DIAS
-.ui-datepicker table { background:#FDF5E6; }  //  COR DE FUNDO 
-.ui-datepicker title {font-size: 30px;}  //  titulo
+.ui-widget.ui-widget-content{width: 450px;} /* TAMANHO DO CALENDARIO */
+.ui-datepicker td a { text-align: center; font-size: 30px;} /* INFORMAÇÕES DOS NÚMEROS DOS DIAS */
+.ui-datepicker table { background:#FDF5E6; } /* COR DE FUNDO */
+.ui-datepicker title {font-size: 30px;} /* TÍTULO */
 
 
 /*.ui-datepicker th a { background:#FDF5E6; }
 //.ui-datepicker-calendar {background:#FDF5E6;}*/
 #datepicker  {padding-left: 20px; }
 
-</style>  
+</style>
 </head>
 <body>
 <table width="995" height="350"  border="0" cellspacing="0" cellpadding="0" align="center" VALIGN="TOP">
@@ -49,6 +49,6 @@
         </td>
     </tr>
  </table>
- 
+
 </body>
 </html>

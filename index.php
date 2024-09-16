@@ -49,6 +49,7 @@
             .script('js/jqwidgets-ver3.4.0/jqwidgets/jqxbuttons.js').wait()
             .script('js/jqwidgets-ver3.4.0/jqwidgets/jqxgrid.selection.js').wait()
             .script('js/jqwidgets-ver3.4.0/jqwidgets/jqxgrid.filter.js').wait()
+            .script('js/jqwidgets-ver3.4.0/jqwidgets/jqxnumberinput.js').wait()
             .script('x_controle_botoes.js?nocache=1.1').wait()
             .script('js/principal.js').wait()
     </script>

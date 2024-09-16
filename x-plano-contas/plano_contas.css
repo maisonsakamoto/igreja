@@ -68,3 +68,6 @@
     color: red !important;
     cursor: pointer;
 }
+.input-field * {
+    width: 100%;
+}

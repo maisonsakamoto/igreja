@@ -12,12 +12,10 @@
     color: black;
     margin-bottom: 10px;
 }
-.cor_grid { color: red; font-weight: bold !important; }
+
 .cor-selecionado { background-color: #44983a !important; color: white !important; }
 
-#table_grupos, #table_contas {
-    background-color: #e1f0e1;
-}
+#table_grupos, #table_contas { background-color: #e1f0e1; }
 .font01{
     background-color: black;
     height: 20px;
@@ -44,17 +42,7 @@
     background-color: bisque;
     overflow: auto;
 }
-#pagina {
-    background-color: white;
-}
-.line-height-1 {
-    line-height: 20px;
-}
-.row .card{
-    padding: 0px !important;
-    color: white;
-    background: black;
-}
+
 .btn-plano-contas {
     background: #FFFFE0;
     width: 140px;
@@ -73,10 +61,10 @@
     width: 100%;
     border-collapse: collapse;
 }
-th, td {
+.colunas th, td {
     text-align: left;
 }
-tr:hover {
+.colunas tr:hover {
     color: red !important;
     cursor: pointer;
 }

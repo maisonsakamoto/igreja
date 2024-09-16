@@ -10,7 +10,7 @@ var PlanoContas = class PlanoContas {
 
     start() {
         this.carregarGrupos();
-        // this.eventos(); // carregar os eventos somente após carregar os grupos de contas
+        this.eventos();
     }
 
     eventos() {
@@ -28,9 +28,11 @@ var PlanoContas = class PlanoContas {
 
         $('#bt_editar_grupo').click((e) => {
             e.stopImmediatePropagation();
-            const idi = $(e.currentTarget).attr('nr_id');
-            const $grupoSelecionado = $('#table_grupos tr.cor-selecionado');
-            const grupoNome = $grupoSelecionado.find('td:eq(1) div').text();
+            const $grid_grupos = $("#div_grupos");
+            const idx = $grid_grupos.jqxGrid('getselectedrowindex');
+            const row = $grid_grupos.jqxGrid('getrowdata', idx);
+            const idi = row.id_grupo;
+            const grupoNome = row.grupo_nome;
 
             const dialogContent = `
                 <form id="editarGrupoForm">
@@ -44,16 +46,13 @@ var PlanoContas = class PlanoContas {
                 buttons: {
                     'Salvar': () => {
                         const novoNome = $('#grupoNome').val();
-                        $.ajax({
-                            url: 'x-plano-contas/col_plano_contas.php',
-                            type: 'POST',
-                            dataType: 'json',
+                        $.ajax({ url: 'x-plano-contas/col_plano_contas.php', type: 'POST', dataType: 'json',
                             data: { funcao: 'editarGrupo', id: idi, nome: novoNome },
                             success: () => {
-                                $grupoSelecionado.find('td:eq(1) div').text(novoNome);
+                                $grid_grupos.jqxGrid('setcellvalue', idx, 'grupo_nome', novoNome);
                                 $tela.dialog('close');
                             },
-                            error: () => { alert('Erro ao comunicar com o servidor'); }
+                            error: () => { custom.informe('Erro ao comunicar com o servidor'); }
                         });
                     },
                     'Cancelar': function() { $(this).dialog('close'); }
@@ -85,10 +84,10 @@ var PlanoContas = class PlanoContas {
                                     this.carregarGrupos();
                                     $tela.dialog('close');
                                 } else {
-                                    alert('Erro ao criar novo grupo: ' + response.message);
+                                    custom.informe('Erro ao criar novo grupo: ' + response.message);
                                 }
                             },
-                            error: () => { alert('Erro ao comunicar com o servidor'); }
+                            error: () => { custom.informe('Erro ao comunicar com o servidor'); }
                         });
                     },
                     'Cancelar': function() { $(this).dialog('close'); }
@@ -124,10 +123,10 @@ var PlanoContas = class PlanoContas {
                                     this.carregarContas(grupoId);
                                     $tela.dialog('close');
                                 } else {
-                                    alert('Erro ao criar nova conta: ' + response.message);
+                                    custom.informe('Erro ao criar nova conta: ' + response.message);
                                 }
                             },
-                            error: () => { alert('Erro ao comunicar com o servidor'); }
+                            error: () => { custom.informe('Erro ao comunicar com o servidor'); }
                         });
                     },
                     'Cancelar': function() { $(this).dialog('close'); }
@@ -146,21 +145,22 @@ var PlanoContas = class PlanoContas {
     }
 
     renderizarGrupos(grupos) {
-        const $table = $('<table id="table_grupos"></table>');
-        grupos.forEach((grupo) => {
-            const $tr = $('<tr>').addClass('hover info botao aciona');
-            const $tdId = $('<td>').css('width', '30%');
-            const $tdNome = $('<td>').css('width', '70%');
-
-            $('<div>').attr({'nr-id': grupo.id_grupo}).text(grupo.id_grupo).addClass('font02').appendTo($tdId);
-            $('<div>').attr({'nr-id': grupo.id_grupo}).text(grupo.grupo_nome.substr(0, 50)).addClass('font02').appendTo($tdNome);
-
-            $tr.append($tdId).append($tdNome);
-            $table.append($tr);
+        const $grid_grupos = $("#div_grupos");
+        const that = this;
+        $grid_grupos.jqxGrid({ width: '100%', height: '100%', source: new $.jqx.dataAdapter({ localdata: grupos }),
+            columnsheight: 0,   // Altura do Cabecalho
+            rowsheight: 20,      // Altura das linhas
+            columns: [
+                { text: 'ID'  , dataField: 'id_grupo'  , width: '15%', align: 'center', cellsalign:'center'},
+                { text: 'Nome', dataField: 'grupo_nome', width: '85%', align: 'center', cellsalign:'left' }
+            ]
         });
 
-        $('#table_grupos').replaceWith($table);
-        this.eventos();
+        $grid_grupos.on('rowselect', function(event){
+            const idx = event.args.rowindex;
+            const obj = $grid_grupos.jqxGrid('getrowdata', idx);
+            that.carregarContas(obj.id_grupo);
+        });
     }
 
     carregarContas(grupoId) {
@@ -172,28 +172,18 @@ var PlanoContas = class PlanoContas {
     }
 
     renderizarContas(contas) {
-        const $table = $('<table id="table_contas"></table>');
-
-        contas.forEach((conta) => {
-            const $tr = $('<tr>').addClass('hover info botao aciona');
-            const $tdId = $('<td>').css('width', '35px');
-            const $tdNome = $('<td>').css('width', '250px');
-
-            const $divId = $('<div>');
-            $divId.attr({'nr_id': conta.id_conta}).text(conta.id_contas);
-            $divId.attr('class', 'font02');
-            $divId.appendTo($tdId);
-            const $divNome = $('<div>');
-            conta.nome == null ? conta.nome = '' : conta.nome = conta.nome;
-            $divNome.attr({'nr_id': conta.id_conta}).text(conta.nome.substr(0, 50));
-            $divNome.attr('class', 'font02');
-            $divNome.appendTo($tdNome);
-
-            $tr.append($tdId).append($tdNome);
-            $table.append($tr);
+        const $grid_contas = $("#div_contas");
+        $grid_contas.jqxGrid({
+            width: '100%',
+            height: '100%',
+            source: new $.jqx.dataAdapter({ localdata: contas }),
+            columnsheight: 0,   // Altura do Cabeçalho
+            rowsheight: 20,      // Altura das linhas
+            columns: [
+                { text: 'ID', dataField: 'id_contas', width: '15%', align: 'center', cellsalign:'center'},
+                { text: 'Nome', dataField: 'nome', width: '85%', align: 'center', cellsalign:'left' }
+            ]
         });
-
-        $('#table_contas').replaceWith($table);
     }
 }
 

@@ -77,3 +77,6 @@
 
 .marginTop10px{margin-top: 10px;}
 .waiting{ cursor: wait !important; }
+.jqx-grid-cell{ font-size: 11px; background: #EEEED1; }
+.jqx-fill-state-hover{ color: red; font-weight: bold; }
+.jqx-grid-cell-selected{ background: #9BCD9B; }

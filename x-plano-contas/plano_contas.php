@@ -1,10 +1,8 @@
 <div class="card">
     <div class="row">
         <div class="col s12">
-            <div class="card">
-                <div class="font01">
-                    <h4>PLANO DE CONTAS</h4>
-                </div>
+            <div class="font01">
+                <h4>PLANO DE CONTAS</h4>
             </div>
         </div>
     </div>
@@ -47,6 +45,8 @@
         </div>
     </div>
 </div>
+
+
 <script type="text/javascript">
     principal.carregarArquivo('x-plano-contas/plano_contas.css');
     principal.carregarArquivo('x-plano-contas/plano_contas.js');

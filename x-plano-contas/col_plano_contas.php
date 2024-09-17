@@ -44,7 +44,7 @@ class PlanoContas {
 
     public function getContas() {
         $grupoId = $_REQUEST['grupoId'];
-        $query = "SELECT * FROM plano_contas_conta WHERE grupo = ? ORDER BY nome";
+        $query = "SELECT * FROM plano_contas_conta WHERE grupo = ? ORDER BY conta_nome";
         $stmt = mysqli_prepare($this->link, $query);
         mysqli_stmt_bind_param($stmt, "i", $grupoId);
         mysqli_stmt_execute($stmt);
@@ -61,7 +61,7 @@ class PlanoContas {
     public function novaConta() {
         $nome = $_REQUEST['nome'];
         $grupoId = $_REQUEST['grupoId'];
-        $query = "INSERT INTO plano_contas_conta (nome, grupo) VALUES (UPPER(?), ?)";
+        $query = "INSERT INTO plano_contas_conta (conta_nome, grupo) VALUES (UPPER(?), ?)";
         $stmt = mysqli_prepare($this->link, $query);
         mysqli_stmt_bind_param($stmt, "si", $nome, $grupoId);
         $success = mysqli_stmt_execute($stmt);
@@ -83,6 +83,7 @@ class PlanoContas {
         mysqli_stmt_execute($stmt);
         return mysqli_stmt_affected_rows($stmt) > 0;
     }
+
 }
 
 $planoContas = new PlanoContas();

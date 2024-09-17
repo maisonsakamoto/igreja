@@ -2,6 +2,7 @@
  * @author: Maison K. Sakamoto - 16/09/2024
  * Principal - Classe principal do sistema, funções primarias para inicialização do sistema e funções comuns para qualquer módulo
  */
+/// <reference path="reference.js" />
 
 var Principal = class Principal {
 

@@ -80,3 +80,15 @@
 .jqx-grid-cell{ font-size: 11px; background: #EEEED1; }
 .jqx-fill-state-hover{ color: red; font-weight: bold; }
 .jqx-grid-cell-selected{ background: #9BCD9B; }
+
+button{
+    background: #FFFFE0;
+    color: black;
+    height: 30px;
+    font: 12px verdana;
+}
+button:hover{
+    cursor: pointer;
+    background: #CFCFCF;
+    color: black;
+}

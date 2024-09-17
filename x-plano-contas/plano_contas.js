@@ -2,6 +2,7 @@
  * PlanoContas
  * @author: Maison K. Sakamoto - 15/09/2024
  */
+/// <reference path="../js/reference.js" />
 
 var PlanoContas = class PlanoContas {
     constructor() {
@@ -134,6 +135,8 @@ var PlanoContas = class PlanoContas {
                 close: function() { $(this).dialog('destroy').remove(); }
             });
         });
+
+
     }
 
     carregarGrupos() {
@@ -148,11 +151,11 @@ var PlanoContas = class PlanoContas {
         const $grid_grupos = $("#div_grupos");
         const that = this;
         $grid_grupos.jqxGrid({ width: '100%', height: '100%', source: new $.jqx.dataAdapter({ localdata: grupos }),
-            columnsheight: 0,   // Altura do Cabecalho
+            //columnsheight: 0,   // Altura do Cabecalho
             rowsheight: 20,      // Altura das linhas
             columns: [
                 { text: 'ID'  , dataField: 'id_grupo'  , width: '15%', align: 'center', cellsalign:'center'},
-                { text: 'Nome', dataField: 'grupo_nome', width: '85%', align: 'center', cellsalign:'left' }
+                { text: 'Grupo Nome', dataField: 'grupo_nome', width: '85%', align: 'center', cellsalign:'left' }
             ]
         });
 
@@ -173,15 +176,12 @@ var PlanoContas = class PlanoContas {
 
     renderizarContas(contas) {
         const $grid_contas = $("#div_contas");
-        $grid_contas.jqxGrid({
-            width: '100%',
-            height: '100%',
-            source: new $.jqx.dataAdapter({ localdata: contas }),
-            columnsheight: 0,   // Altura do Cabeçalho
+        $grid_contas.jqxGrid({ width: '100%', height: '100%', source: new $.jqx.dataAdapter({ localdata: contas }),
+            //columnsheight: 0,   // Altura do Cabeçalho
             rowsheight: 20,      // Altura das linhas
             columns: [
                 { text: 'ID', dataField: 'id_contas', width: '15%', align: 'center', cellsalign:'center'},
-                { text: 'Nome', dataField: 'nome', width: '85%', align: 'center', cellsalign:'left' }
+                { text: 'Conta Nome', dataField: 'conta_nome', width: '85%', align: 'center', cellsalign:'left' }
             ]
         });
     }

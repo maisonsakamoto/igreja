@@ -1,8 +1,3 @@
-<style>
-    .input-field * {
-        width: 100%;
-    }
-</style>
 <div class="row">
     <div class="col s12">
         <div class="font01">LANÇAMENTOS DA CONTA</div>
@@ -89,6 +84,7 @@
     </div>
 </form>
 
-<script>
-    $LAB.script('x-lancamentos/lancamentos.js?nocache='+Math.random()).wait();
+<script type="text/javascript">
+    principal.carregarArquivo('x-lancamentos/lancamentos.css');
+    principal.carregarArquivo('x-lancamentos/lancamentos.js');
 </script>

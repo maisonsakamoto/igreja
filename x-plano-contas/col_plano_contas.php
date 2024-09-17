@@ -44,7 +44,7 @@ class PlanoContas {
 
     public function getContas() {
         $grupoId = $_REQUEST['grupoId'];
-        $query = "SELECT * FROM plano_contas_conta WHERE grupo = ? ORDER BY nome";
+        $query = "SELECT * FROM plano_contas_conta WHERE grupo = ? ORDER BY conta_nome";
         $stmt = mysqli_prepare($this->link, $query);
         mysqli_stmt_bind_param($stmt, "i", $grupoId);
         mysqli_stmt_execute($stmt);
@@ -61,7 +61,7 @@ class PlanoContas {
     public function novaConta() {
         $nome = $_REQUEST['nome'];
         $grupoId = $_REQUEST['grupoId'];
-        $query = "INSERT INTO plano_contas_conta (nome, grupo) VALUES (UPPER(?), ?)";
+        $query = "INSERT INTO plano_contas_conta (conta_nome, grupo) VALUES (UPPER(?), ?)";
         $stmt = mysqli_prepare($this->link, $query);
         mysqli_stmt_bind_param($stmt, "si", $nome, $grupoId);
         $success = mysqli_stmt_execute($stmt);
@@ -84,40 +84,6 @@ class PlanoContas {
         return mysqli_stmt_affected_rows($stmt) > 0;
     }
 
-    public function novoLancamento() {
-        $dataEmissao = $_REQUEST['dataEmissao'];
-        $descricao = $_REQUEST['descricao'];
-        $valor = $_REQUEST['valor'];
-        $contaId = $_REQUEST['contaId'];
-
-        $query = "INSERT INTO plano_contas_lancamento (lanc_dt_emissao, lanc_descricao, lanc_valor, lanc_conta) VALUES (?, UPPER(?), ?, ?)";
-        $stmt = mysqli_prepare($this->link, $query);
-        mysqli_stmt_bind_param($stmt, "ssdi", $dataEmissao, $descricao, $valor, $contaId);
-        $success = mysqli_stmt_execute($stmt);
-
-        if ($success) {
-            $novoId = mysqli_insert_id($this->link);
-            return array('success' => true, 'id' => $novoId);
-        } else {
-            return array('success' => false, 'message' => mysqli_error($this->link));
-        }
-    }
-
-    public function getLancamentos() {
-        //$contaId = $_REQUEST['contaId'];
-        //$query = "SELECT * FROM plano_contas_lancamento WHERE lanc_conta = ? ORDER BY lanc_dt_emissao DESC";
-        $query = "SELECT * FROM plano_contas_lancamento ORDER BY lanc_dt_emissao DESC limit 1000";
-        $stmt = mysqli_prepare($this->link, $query);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-
-        $lancamentos = array();
-        while ($row = mysqli_fetch_assoc($result)) {
-            $lancamentos[] = $row;
-        }
-
-        return $lancamentos;
-    }
 }
 
 $planoContas = new PlanoContas();

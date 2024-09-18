@@ -12,3 +12,9 @@
     list-style: none;
     line-height: 20px;
 }
+.colunas {
+    height: 590px;
+    border: 1px solid black;
+    background-color: bisque;
+    overflow: auto;
+}

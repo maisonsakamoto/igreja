@@ -128,8 +128,10 @@ var Despesas = class Despesas {
             { name: 'conta_nome'      , type: 'string' },
             { name: 'grupo_nome'      , type: 'string' }
         ];
+
         $grid_lancamentos.jqxGrid({
-            width: '100%', height: '200px', source: new $.jqx.dataAdapter({ localdata: lancamentos, datafields: datafields }),
+            width: '100%', source: new $.jqx.dataAdapter({ localdata: lancamentos, datafields: datafields }),
+            height: '580px',
             selectionmode: 'row', // MODO DE SELECAO 'singlecell', 'none', 'row' // TIPOS DE SELEÇÃO
             columnsresize: true,  // Habilitar redimensionamento de colunas
             sortable: true,       // Habilitar ordenação

@@ -1,4 +1,4 @@
-<div class="card">
+
     <div class="row">
         <div class="col s12">
             <div class="font01">
@@ -7,26 +7,42 @@
         </div>
     </div>
 
-    <div class="row">
+    <!--<div class="row">
         <div class="col s5">
             <div class="font01">GRUPOS</div>
         </div>
         <div class="col s7">
             <div class="font01">CONTAS DO GRUPO</div>
         </div>
-    </div>
+    </div>-->
 
     <div class="row">
         <div class="col s5">
             <div class="card colunas">
-                <div id="div_grupos"></div>
-                <table id="table_grupos" class=""></table>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="font01">GRUPOS</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <div id="div_grupos"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col s7">
             <div class="card colunas">
-                <div id="div_contas"></div>
-                <table id="table_contas" class=""></table>
+                <div class="row">
+
+                        <div class="font01">CONTAS DO GRUPO</div>
+
+                </div>
+                <div class="row">
+
+                        <div id="div_contas"></div>
+
+                </div>
             </div>
         </div>
     </div>
@@ -44,7 +60,7 @@
             </div>
         </div>
     </div>
-</div>
+
 
 
 <script type="text/javascript">

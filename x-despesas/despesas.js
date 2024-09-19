@@ -4,11 +4,13 @@
 /// <reference path="../js/reference.js" />
 
 var Despesas = class Despesas {
+    col_altura = principal.altura_pagina-115;
 
     constructor() {
         this.eventos();
         this.carregarDespesas();
         this.selectedLancamentoId = null;
+        $(".colunas").css('height', principal.altura_pagina-110);
     }
 
     eventos() {
@@ -131,7 +133,7 @@ var Despesas = class Despesas {
 
         $grid_lancamentos.jqxGrid({
             width: '100%', source: new $.jqx.dataAdapter({ localdata: lancamentos, datafields: datafields }),
-            height: '580px',
+            height: that.col_altura,
             selectionmode: 'row', // MODO DE SELECAO 'singlecell', 'none', 'row' // TIPOS DE SELEÇÃO
             columnsresize: true,  // Habilitar redimensionamento de colunas
             sortable: true,       // Habilitar ordenação

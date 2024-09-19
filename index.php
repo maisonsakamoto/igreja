@@ -69,6 +69,6 @@
             .script('js/jqxwidgets-ver15.0.0/jqwidgets/jqxgrid.grouping.js').wait()
             .script('js/jqxwidgets-ver15.0.0/jqwidgets/jqxbuttongroup.js').wait()
             .script('x_controle_botoes.js?nocache=1.1').wait()
-            .script('js/principal.js').wait()
+            .script('js/principal.js?nocache='+Math.random()).wait()
     </script>
 </html>

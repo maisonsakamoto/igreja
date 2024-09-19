@@ -5,10 +5,13 @@
 /// <reference path="reference.js" />
 
 var Principal = class Principal {
-
+    altura_pagina = $(window).height() - 150;
     constructor() {
         this.abrirMenu();
         this.abrirPagina('home.php');
+        setTimeout(() => {
+
+        }, 300);
     }
 
     /**
@@ -23,8 +26,10 @@ var Principal = class Principal {
      * @param {*} url
      */
     abrirPagina(url){
+        var that = this;
         $('#pagina').slideUp("fast",function(){ // Efeito de sobe da pagina
             $('#pagina').load(url, function(){  // Carrega pagina
+                that.ajustarAlturaPagina();     // Ajusta a altura da pagina
                 $('#pagina').slideDown("fast"); // Efeito de desce da pagina
             });
         });
@@ -50,6 +55,13 @@ var Principal = class Principal {
             linkElement.href = patchArquivo + '?v=' + nocache;
             document.head.appendChild(linkElement);
         }
+    }
+
+    /**
+     * Ajusta a altura da pagina
+     */
+    ajustarAlturaPagina(){
+        $("#pagina").css('height', this.altura_pagina);
     }
 }
 

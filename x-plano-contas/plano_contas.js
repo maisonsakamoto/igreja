@@ -7,7 +7,11 @@
 var $grid_grupos = $('#div_grupos');
 var $grid_contas = $('#div_contas');
 
+
 var PlanoContas = class PlanoContas {
+
+    col_altura = principal.altura_pagina-145;
+
     constructor() {
         this.start();
     }
@@ -15,6 +19,7 @@ var PlanoContas = class PlanoContas {
     start() {
         this.carregarGrupos();
         this.eventos();
+        $(".colunas").css('height', principal.altura_pagina-120);
     }
 
     eventos() {
@@ -157,12 +162,13 @@ var PlanoContas = class PlanoContas {
 
     renderizarGrupos(grupos) {
         const that = this;
-        $grid_grupos.jqxGrid({ width: '99.6%', height: '525px', source: new $.jqx.dataAdapter({ localdata: grupos }),
+
+        $grid_grupos.jqxGrid({ width: '100%', height: this.col_altura, source: new $.jqx.dataAdapter({ localdata: grupos }),
             rowsheight: 20,
             columns: [
-                { text: 'ID'  , dataField: 'id_grupo'  , width: '10%', align: 'center', cellsalign:'center'},
-                { text: 'Grupo Nome', dataField: 'grupo_nome', width: '75%', align: 'center', cellsalign:'left' },
-                { text: 'Tipo', dataField: 'grupo_tipo', width: '15%', align: 'center', cellsalign:'center',
+                { text: 'ID'        , dataField: 'id_grupo'  , width: '10%', align: 'center', cellsalign:'center'},
+                { text: 'Grupo Nome', dataField: 'grupo_nome', width: '70%', align: 'center', cellsalign:'left' } ,
+                { text: 'Tipo'      , dataField: 'grupo_tipo', width: '20%', align: 'center', cellsalign:'center' ,
                   cellsrenderer: (row, column, value) => { return value === 'D' ? 'DESPESAS' : 'RECEITAS'; }
                 }
             ]
@@ -184,7 +190,7 @@ var PlanoContas = class PlanoContas {
     }
 
     renderizarContas(contas) {
-        $grid_contas.jqxGrid({ width: '99.8%', height: '525px', source: new $.jqx.dataAdapter({ localdata: contas }),
+        $grid_contas.jqxGrid({ width: '99.8%', height: this.col_altura, source: new $.jqx.dataAdapter({ localdata: contas }),
             rowsheight: 20,
             columns: [
                 { text: 'ID', dataField: 'id_contas', width: '15%', align: 'center', cellsalign:'center'},

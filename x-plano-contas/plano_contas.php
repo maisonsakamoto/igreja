@@ -20,14 +20,14 @@
         <div class="col s5">
             <div class="card colunas">
                 <div class="row">
-                    <div class="col s12">
+
                         <div class="font01">GRUPOS</div>
-                    </div>
+
                 </div>
                 <div class="row">
-                    <div class="col s12">
+
                         <div id="div_grupos"></div>
-                    </div>
+
                 </div>
             </div>
         </div>

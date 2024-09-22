@@ -10,6 +10,7 @@ var Lancamentos = class Lancamentos {
         this.eventos();
         this.carregarLancamentos();
         this.selectedLancamentoId = null;
+        $(".colunas").css('height', principal.altura_pagina-110);
     }
 
     eventos() {

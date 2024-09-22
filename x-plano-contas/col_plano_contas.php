@@ -27,6 +27,22 @@ class PlanoContas {
         return $grupos;
     }
 
+    public function getGruposTipo() {
+        $obj = (object) $_REQUEST['obj'];
+        $query = "SELECT * FROM plano_contas_grupo WHERE grupo_tipo = ? ORDER BY id_grupo, grupo_nome";
+        $stmt = mysqli_prepare($this->link, $query);
+        mysqli_stmt_bind_param($stmt, "s", $obj->grupoTipo);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $grupos = array();
+        while ($row = mysqli_fetch_assoc($result)) {
+            $grupos[] = $row;
+        }
+
+        return $grupos;
+    }
+
     public function novoGrupo() {
         $nome = $_REQUEST['nome'];
         $grupoTipo = $_REQUEST['grupoTipo'];

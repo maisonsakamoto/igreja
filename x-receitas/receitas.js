@@ -4,6 +4,7 @@
 /// <reference path="../js/reference.js" />
 
 var Lancamentos = class Lancamentos {
+    col_altura = principal.altura_pagina-115;
 
     constructor() {
         this.eventos();
@@ -32,7 +33,7 @@ var Lancamentos = class Lancamentos {
         $tela.find('#valor').setMask();
         $tela.dialog({ title: 'Novo Lançamento', modal: true, width: 550,
             open: function() {
-                const $ajax = custom.ajaxAsync({}, 'getGrupos', 'x-plano-contas/col_plano_contas.php');
+                const $ajax = custom.ajaxAsync({ grupoTipo: 'R' }, 'getGruposTipo', 'x-plano-contas/col_plano_contas.php');
                 $ajax.always(function(data, status) {
                     if (status == 'success') { that.renderizarGrupos($tela, data); }
                     else { custom.informe('Erro ao carregar grupos: ' + data.responseText); }
@@ -100,7 +101,7 @@ var Lancamentos = class Lancamentos {
         }
 
         var obj = { dataEmissao: dataEmissao, descricao: descricao, valor: valor, contaId: contaId };
-        var $ajax = custom.ajaxAsync(obj, 'novoLancamento', 'x-lancamentos/col_lancamentos.php');
+        var $ajax = custom.ajaxAsync(obj, 'novoLancamento', 'x-receitas/col_receitas.php');
         $ajax.always(function(json, status) {
             if (status == 'success') { that.carregarLancamentos(); }
             else { custom.informe('Erro ao criar novo lançamento: ' + json.responseText); }
@@ -110,7 +111,7 @@ var Lancamentos = class Lancamentos {
 
     carregarLancamentos() {
         const that = this;
-        const $ajax = custom.ajaxAsync({}, 'getLancamentos', 'x-lancamentos/col_lancamentos.php');
+        const $ajax = custom.ajaxAsync({}, 'getLancamentos', 'x-receitas/col_receitas.php');
         $ajax.always(function(data, status) {
             if (status == 'success') { that.renderizarLancamentos(data); }
             else { custom.informe('Erro ao carregar lançamentos: ' + data.responseText); }
@@ -129,7 +130,8 @@ var Lancamentos = class Lancamentos {
             { name: 'grupo_nome'      , type: 'string' }
         ];
         $grid_lancamentos.jqxGrid({
-            width: '100%', height: '100%', source: new $.jqx.dataAdapter({ localdata: lancamentos, datafields: datafields }),
+            width: '100%', source: new $.jqx.dataAdapter({ localdata: lancamentos, datafields: datafields }),
+            height: that.col_altura,
             selectionmode: 'row', // MODO DE SELECAO 'singlecell', 'none', 'row' // TIPOS DE SELEÇÃO
             columnsresize: true,  // Habilitar redimensionamento de colunas
             sortable: true,       // Habilitar ordenação
@@ -169,7 +171,7 @@ var Lancamentos = class Lancamentos {
 
         custom.confirme('Tem certeza que deseja excluir este lançamento?', function() {
             const obj = { lancamentoId: that.selectedLancamentoId };
-            const $ajax = custom.ajaxAsync(obj, 'excluirLancamento', 'x-lancamentos/col_lancamentos.php');
+            const $ajax = custom.ajaxAsync(obj, 'excluirLancamento', 'x-receitas/col_receitas.php');
             $ajax.always(function(json, status) {
                 if (status == 'success') {
                     custom.informe('Lançamento excluído com sucesso');

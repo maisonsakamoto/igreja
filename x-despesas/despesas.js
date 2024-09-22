@@ -34,7 +34,7 @@ var Despesas = class Despesas {
         $tela.find('#valor').setMask();
         $tela.dialog({ title: 'Nova Despesa', modal: true, width: 550,
             open: function() {
-                const $ajax = custom.ajaxAsync({}, 'getGrupos', 'x-plano-contas/col_plano_contas.php');
+                const $ajax = custom.ajaxAsync({grupoTipo: 'D'}, 'getGruposTipo', 'x-plano-contas/col_plano_contas.php');
                 $ajax.always(function(data, status) {
                     if (status == 'success') { that.renderizarGrupos($tela, data); }
                     else { custom.informe('Erro ao carregar grupos: ' + data.responseText); }

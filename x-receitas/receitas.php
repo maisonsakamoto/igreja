@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col s12">
-        <div class="font01">LANÇAMENTOS DA CONTA</div>
+        <div class="font01">LANÇAMENTOS DE RECEITAS</div>
     </div>
 </div>
 
@@ -85,6 +85,6 @@
 </form>
 
 <script type="text/javascript">
-    principal.carregarArquivo('x-lancamentos/lancamentos.css');
-    principal.carregarArquivo('x-lancamentos/lancamentos.js');
+    principal.carregarArquivo('x-receitas/receitas.css');
+    principal.carregarArquivo('x-receitas/receitas.js');
 </script>

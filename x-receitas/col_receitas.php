@@ -21,10 +21,10 @@ class ColLancamentos {
         $descricao = $obj->descricao;
         $valor = $obj->valor;
         $contaId = $obj->contaId;
-
-        $query = "INSERT INTO plano_contas_lancamento (lanc_dt_emissao, lanc_descricao, lanc_valor, lanc_conta) VALUES (?, UPPER(?), ?, ?)";
+        $tipo = 'R';
+        $query = "INSERT INTO plano_contas_lancamento (lanc_dt_emissao, lanc_descricao, lanc_valor, lanc_conta, lanc_tipo) VALUES (?, UPPER(?), ?, ?, ?)";
         $stmt = mysqli_prepare($this->link, $query);
-        mysqli_stmt_bind_param($stmt, "ssdi", $dataEmissao, $descricao, $valor, $contaId);
+        mysqli_stmt_bind_param($stmt, "ssdis", $dataEmissao, $descricao, $valor, $contaId, $tipo);
         $success = mysqli_stmt_execute($stmt);
 
         if ($success) {
@@ -46,6 +46,7 @@ class ColLancamentos {
                         FROM plano_contas_lancamento l
                     LEFT JOIN plano_contas_conta c ON c.id_contas = l.lanc_conta
                     LEFT JOIN plano_contas_grupo g ON g.id_grupo = c.grupo
+                    WHERE l.lanc_tipo = 'R'
                     ORDER BY lanc_dt_emissao DESC limit 1000";
         $stmt = mysqli_prepare($this->link, $query);
         mysqli_stmt_execute($stmt);

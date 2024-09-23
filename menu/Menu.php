@@ -14,7 +14,9 @@
                 <li><a href="javascript:principal.abrirPagina('home_com_calendario.php');">Calendario</a></li>
                 <li><b>Financeiro</b></li>
                 <li><a href="javascript:principal.abrirPagina('x-plano-contas/plano_contas.php');">Plano de Contas</a></li>
-                <li><a href="javascript:principal.abrirPagina('x-lancamentos/lancamentos.php');">Lançamentos</a></li>
+                <li><a href="javascript:principal.abrirPagina('x-despesas/despesas.php');">Despesas</a></li>
+                <li><a href="javascript:principal.abrirPagina('x-receitas/receitas.php');">Receitas</a></li>
+                <li><a href="javascript:principal.abrirPagina('x-relatorios/relatorios.php');">Relatórios</a></li>
                 <!--<li><a href="javascript:principal.abrirPagina('testes.php');">T E S T E S</a></li>-->
             </ul>
         </div>

@@ -4,7 +4,14 @@
  */
 /// <reference path="../js/reference.js" />
 
+var $grid_grupos = $('#div_grupos');
+var $grid_contas = $('#div_contas');
+
+
 var PlanoContas = class PlanoContas {
+
+    col_altura = principal.altura_pagina-145;
+
     constructor() {
         this.start();
     }
@@ -12,34 +19,29 @@ var PlanoContas = class PlanoContas {
     start() {
         this.carregarGrupos();
         this.eventos();
+        $(".colunas").css('height', principal.altura_pagina-120);
     }
 
     eventos() {
-        $('#table_grupos tr').on('click', (e) => {
-            e.stopImmediatePropagation();
-            $('.cor-selecionado').removeClass('cor-selecionado');
-            $(e.currentTarget).addClass('cor-selecionado');
-
-            const idi = $(e.currentTarget).find('div').attr('nr-id');
-            $('#bt_editar_grupo').attr('nr_id', idi);
-            $('#bt_nova_conta').attr('nr_id', idi);
-            $('#bt_novo_grupo').attr('nr_id', idi);
-            this.carregarContas(idi);
-        });
-
         $('#bt_editar_grupo').click((e) => {
             e.stopImmediatePropagation();
-            const $grid_grupos = $("#div_grupos");
             const idx = $grid_grupos.jqxGrid('getselectedrowindex');
             const row = $grid_grupos.jqxGrid('getrowdata', idx);
             const idi = row.id_grupo;
             const grupoNome = row.grupo_nome;
+            const grupoTipo = row.grupo_tipo;
 
             const dialogContent = `
-                <form id="editarGrupoForm">
+                <div id="editarGrupoForm">
                     <label for="grupoNome">Nome do Grupo:</label>
                     <input type="text" id="grupoNome" name="grupoNome" value="${grupoNome}" required>
-                </form>
+                    <br><br>
+                    <label for="grupoTipo">Tipo de Grupo:</label>
+                    <select id="grupoTipo" name="grupoTipo" required>
+                        <option value="D" ${grupoTipo === 'D' ? 'selected' : ''}>Despesas</option>
+                        <option value="R" ${grupoTipo === 'R' ? 'selected' : ''}>Receitas</option>
+                    </select>
+                </div>
             `;
 
             const $tela = $('<div>').html(dialogContent);
@@ -47,10 +49,12 @@ var PlanoContas = class PlanoContas {
                 buttons: {
                     'Salvar': () => {
                         const novoNome = $('#grupoNome').val();
+                        const novoTipo = $('#grupoTipo').val();
                         $.ajax({ url: 'x-plano-contas/col_plano_contas.php', type: 'POST', dataType: 'json',
-                            data: { funcao: 'editarGrupo', id: idi, nome: novoNome },
+                            data: { funcao: 'editarGrupo', id: idi, nome: novoNome, grupoTipo: novoTipo },
                             success: () => {
                                 $grid_grupos.jqxGrid('setcellvalue', idx, 'grupo_nome', novoNome);
+                                $grid_grupos.jqxGrid('setcellvalue', idx, 'grupo_tipo', novoTipo);
                                 $tela.dialog('close');
                             },
                             error: () => { custom.informe('Erro ao comunicar com o servidor'); }
@@ -66,10 +70,16 @@ var PlanoContas = class PlanoContas {
             e.stopImmediatePropagation();
 
             const dialogContent = `
-                <form id="novoGrupoForm">
+                <div id="novoGrupoForm">
                     <label for="grupoNome">Nome do Novo Grupo:</label>
                     <input type="text" id="grupoNome" name="grupoNome" required>
-                </form>
+                    <br><br>
+                    <label for="grupoTipo">Tipo de Grupo:</label>
+                    <select id="grupoTipo" name="grupoTipo" required>
+                        <option value="D">Despesas</option>
+                        <option value="R">Receitas</option>
+                    </select>
+                </div>
             `;
 
             const $tela = $('<div>').html(dialogContent);
@@ -77,9 +87,10 @@ var PlanoContas = class PlanoContas {
                 buttons: {
                     'Salvar': () => {
                         const novoNome = $('#grupoNome').val();
+                        const novoTipo = $('#grupoTipo').val();
 
                         $.ajax({ url: 'x-plano-contas/col_plano_contas.php', type: 'POST', dataType: 'json',
-                            data: { funcao: 'novoGrupo', nome: novoNome },
+                            data: { funcao: 'novoGrupo', nome: novoNome, grupoTipo: novoTipo },
                             success: (response) => {
                                 if (response.success) {
                                     this.carregarGrupos();
@@ -101,14 +112,16 @@ var PlanoContas = class PlanoContas {
             e.stopImmediatePropagation();
             console.info('Nova Conta');
 
-            const grupoId = $(e.currentTarget).attr('nr_id');
+            const idx = $grid_grupos.jqxGrid('getselectedrowindex');
+            const row = $grid_grupos.jqxGrid('getrowdata', idx);
+            const grupoId = row.id_grupo;
             console.log('ID do grupo: ' + grupoId);
 
             const dialogContent = `
-                <form id="novaContaForm">
+                <div id="novaContaForm">
                     <label for="contaNome">Nome da Nova Conta:</label>
                     <input type="text" id="contaNome" name="contaNome" required>
-                </form>
+                </div>
             `;
 
             const $tela = $('<div>').html(dialogContent);
@@ -148,14 +161,16 @@ var PlanoContas = class PlanoContas {
     }
 
     renderizarGrupos(grupos) {
-        const $grid_grupos = $("#div_grupos");
         const that = this;
-        $grid_grupos.jqxGrid({ width: '100%', height: '100%', source: new $.jqx.dataAdapter({ localdata: grupos }),
-            //columnsheight: 0,   // Altura do Cabecalho
-            rowsheight: 20,      // Altura das linhas
+
+        $grid_grupos.jqxGrid({ width: '100%', height: this.col_altura, source: new $.jqx.dataAdapter({ localdata: grupos }),
+            rowsheight: 20,
             columns: [
-                { text: 'ID'  , dataField: 'id_grupo'  , width: '15%', align: 'center', cellsalign:'center'},
-                { text: 'Grupo Nome', dataField: 'grupo_nome', width: '85%', align: 'center', cellsalign:'left' }
+                { text: 'ID'        , dataField: 'id_grupo'  , width: '10%', align: 'center', cellsalign:'center'},
+                { text: 'Grupo Nome', dataField: 'grupo_nome', width: '70%', align: 'center', cellsalign:'left' } ,
+                { text: 'Tipo'      , dataField: 'grupo_tipo', width: '20%', align: 'center', cellsalign:'center' ,
+                  cellsrenderer: (row, column, value) => { return value === 'D' ? 'DESPESAS' : 'RECEITAS'; }
+                }
             ]
         });
 
@@ -175,10 +190,8 @@ var PlanoContas = class PlanoContas {
     }
 
     renderizarContas(contas) {
-        const $grid_contas = $("#div_contas");
-        $grid_contas.jqxGrid({ width: '100%', height: '100%', source: new $.jqx.dataAdapter({ localdata: contas }),
-            //columnsheight: 0,   // Altura do Cabeçalho
-            rowsheight: 20,      // Altura das linhas
+        $grid_contas.jqxGrid({ width: '99.8%', height: this.col_altura, source: new $.jqx.dataAdapter({ localdata: contas }),
+            rowsheight: 20,
             columns: [
                 { text: 'ID', dataField: 'id_contas', width: '15%', align: 'center', cellsalign:'center'},
                 { text: 'Conta Nome', dataField: 'conta_nome', width: '85%', align: 'center', cellsalign:'left' }

@@ -32,7 +32,7 @@ var PlanoContas = class PlanoContas {
             const grupoTipo = row.grupo_tipo;
 
             const dialogContent = `
-                <form id="editarGrupoForm">
+                <div id="editarGrupoForm">
                     <label for="grupoNome">Nome do Grupo:</label>
                     <input type="text" id="grupoNome" name="grupoNome" value="${grupoNome}" required>
                     <br><br>
@@ -41,7 +41,7 @@ var PlanoContas = class PlanoContas {
                         <option value="D" ${grupoTipo === 'D' ? 'selected' : ''}>Despesas</option>
                         <option value="R" ${grupoTipo === 'R' ? 'selected' : ''}>Receitas</option>
                     </select>
-                </form>
+                </div>
             `;
 
             const $tela = $('<div>').html(dialogContent);
@@ -70,7 +70,7 @@ var PlanoContas = class PlanoContas {
             e.stopImmediatePropagation();
 
             const dialogContent = `
-                <form id="novoGrupoForm">
+                <div id="novoGrupoForm">
                     <label for="grupoNome">Nome do Novo Grupo:</label>
                     <input type="text" id="grupoNome" name="grupoNome" required>
                     <br><br>
@@ -79,7 +79,7 @@ var PlanoContas = class PlanoContas {
                         <option value="D">Despesas</option>
                         <option value="R">Receitas</option>
                     </select>
-                </form>
+                </div>
             `;
 
             const $tela = $('<div>').html(dialogContent);
@@ -118,10 +118,10 @@ var PlanoContas = class PlanoContas {
             console.log('ID do grupo: ' + grupoId);
 
             const dialogContent = `
-                <form id="novaContaForm">
+                <div id="novaContaForm">
                     <label for="contaNome">Nome da Nova Conta:</label>
                     <input type="text" id="contaNome" name="contaNome" required>
-                </form>
+                </div>
             `;
 
             const $tela = $('<div>').html(dialogContent);

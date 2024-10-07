@@ -1,90 +1,57 @@
-<div class="row">
-    <div class="col s12">
-        <div class="font01">LANÇAMENTOS DA CONTA</div>
+<div id="relatorios">
+
+    <div class="row">
+        <div class="col s12">
+            <div class="font01">LANÇAMENTOS DA CONTA</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <div class="card">
+                <div class="row">
+
+                    <div class="col s3">
+                        <fieldset>
+                            <legend>Data inicial:</legend>
+                            <input type="date" id="data_inicial" value="<?= date('Y-m-d', strtotime('-1 month')) ?>">
+                        </fieldset>
+                    </div>
+
+                    <div class="col s3">
+                        <fieldset>
+                            <legend>Data final:</legend>
+                            <input type="date" id="data_final" value="<?= date('Y-m-d') ?>">
+                        </fieldset>
+                    </div>
+
+                    <div class="col s3">
+                        <fieldset>
+                            <legend>Selecione:</legend>
+                            <select id="tipo_lancamento">
+                                <option value="RECEITAS">Receitas</option>
+                                <option value="DESPESAS">Despesas</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                    <div class="col s3">
+                        <button class="btn waves-effect waves-light" id="btn_buscar">BUSCAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <div class="card colunas">
+                <div id="div_lancamentos"></div>
+            </div>
+        </div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col s12">
-        <div class="card colunas">
-            <div id="div_lancamentos"></div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col s2 offset-s8">
-        <button id="bt_excluir_lancamento" class="btn-plano-contas" disabled>Excluir Lançamento</button>
-    </div>
-    <div class="col s2">
-        <div id="bt_lancamentos">
-            <button id="bt_novo_lancamento" class="btn-plano-contas">Novo Lançamento</button>
-        </div>
-    </div>
-</div>
-<!-- Modal Novo Lançamento -->
-<form id="novoLancamentoForm" class="hide">
-    <div class="row">
-        <div class="col s4">
-            <label for="grupoSelect">Grupo:</label>
-        </div>
-        <div class="col s8">
-            <div class="input-field">
-                <select id="grupoSelect" name="grupoSelect" required>
-                    <option value="" disabled selected>Escolha um grupo</option>
-                </select>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col s4">
-            <label for="contaSelect">Conta:</label>
-        </div>
-        <div class="col s8">
-            <div class="input-field">
-                <select id="contaSelect" name="contaSelect" required>
-                    <option value="" disabled selected>Escolha uma conta</option>
-                </select>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col s4">
-            <label for="dataEmissao">Data de Emissão:</label>
-        </div>
-        <div class="col s8">
-            <div class="input-field">
-                <input type="date" id="dataEmissao" name="dataEmissao" required>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col s4">
-            <label for="descricao">Descrição:</label>
-        </div>
-        <div class="col s8">
-            <div class="input-field">
-                <input type="text" id="descricao" name="descricao" required>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col s4">
-            <label for="valor">Valor:</label>
-        </div>
-        <div class="col s8">
-            <div class="input-field">
-                <input id="valor" name="valor" alt="decimal" required>
-            </div>
-        </div>
-    </div>
-</form>
 
 <script type="text/javascript">
-    principal.carregarArquivo('x-lancamentos/lancamentos.css');
-    principal.carregarArquivo('x-lancamentos/lancamentos.js');
+    principal.carregarArquivo('x-relatorios/relatorios.css');
+    principal.carregarArquivo('x-relatorios/relatorios.js');
 </script>

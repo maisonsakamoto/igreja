@@ -1,3 +1,11 @@
+#relatorios {
+    line-height: 0px;
+}
+fieldset input, fieldset select {
+    position: relative;
+    top: 5px;
+    width: 100%;
+}
 .input-field * {
     width: 100%;
 }

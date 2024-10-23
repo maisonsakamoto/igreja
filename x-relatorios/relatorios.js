@@ -39,10 +39,13 @@ var Relatorios = class Relatorios {
 
     renderizarRelatorios(data) {
         const datafields = [
-            { name: 'data_inicial', type: 'string' },
-            { name: 'data_final', type: 'string' },
-            { name: 'tipo_lancamento', type: 'string' },
-            { name: 'lancamentos', type: 'string' }
+            { name: 'lanc_id'        , type: 'number' },
+            { name: 'lanc_dt_emissao', type: 'date'    , format: 'yyyy-MM-dd'},
+            { name: 'lanc_tipo'      , type: 'string' },
+            { name: 'grupo_nome'     , type: 'string' },
+            { name: 'conta_nome'     , type: 'string' },
+            { name: 'lanc_valor'     , type: 'number' },
+            { name: 'lanc_descricao' , type: 'string' }
         ];
 
         const $grid = $("#div_lancamentos");
@@ -50,12 +53,17 @@ var Relatorios = class Relatorios {
         $grid.jqxGrid({
             width: '100%',
             height: '100%',
+            columnsresize: true,  // Habilitar redimensionamento de colunas
+            sortable: true,       // Habilitar ordenação
             source: new $.jqx.dataAdapter({ localdata: data, datafields: datafields }),
             columns: [
-                { text: 'Data Inicial', datafield: 'data_inicial', width: '10%' },
-                { text: 'Data Final', datafield: 'data_final', width: '10%' },
-                { text: 'Tipo Lancamento', datafield: 'tipo_lancamento', width: '10%' },
-                { text: 'Lancamentos', datafield: 'lancamentos', width: '70%' }
+                { text: 'ID'          , datafield: 'lanc_id'        , align: 'center', cellsalign:'right' , width: '10%' },
+                { text: 'Emissão'     , datafield: 'lanc_dt_emissao', align: 'center', cellsalign:'center', width: '10%'  , cellsformat: 'dd/MM/yyyy' },
+                { text: 'Tipo'        , datafield: 'lanc_tipo'      , align: 'center', cellsalign:'center', width: '10%' },
+                { text: 'Grupo'       , datafield: 'grupo_nome'     , align: 'center', cellsalign:'left'  , width: '10%' },
+                { text: 'Conta'       , datafield: 'conta_nome'     , align: 'center', cellsalign:'left'  , width: '20%' },
+                { text: 'Descricao'   , datafield: 'lanc_descricao' , align: 'center', cellsalign:'left'  , width: '20%' },
+                { text: 'Valor'       , datafield: 'lanc_valor'     , align: 'center', cellsalign:'right' , width: '20%', cellsformat: 'f2' }
             ]
         });
         $grid.jqxGrid('localizestrings', custom.localizestrings);

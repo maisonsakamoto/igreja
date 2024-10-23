@@ -29,8 +29,8 @@
                         <fieldset>
                             <legend>Selecione:</legend>
                             <select id="tipo_lancamento">
-                                <option value="RECEITAS">Receitas</option>
-                                <option value="DESPESAS">Despesas</option>
+                                <option value="R">Receitas</option>
+                                <option value="D">Despesas</option>
                             </select>
                         </fieldset>
                     </div>

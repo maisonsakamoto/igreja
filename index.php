@@ -67,7 +67,9 @@
             .script('js/jqxwidgets-ver15.0.0/jqwidgets/jqxdropdownbutton.js').wait()
             .script('js/jqxwidgets-ver15.0.0/jqwidgets/jqxtooltip.js').wait()
             .script('js/jqxwidgets-ver15.0.0/jqwidgets/jqxgrid.grouping.js').wait()
-            .script('js/jqxwidgets-ver15.0.0/jqwidgets/jqxbuttongroup.js').wait()
+            .script('js/jqxwidgets-ver15.0.0/jqwidgets/jqxdata.js').wait()
+            .script('js/jqxwidgets-ver15.0.0/jqwidgets/jqxdata.export.js').wait()
+            .script('js/jqxwidgets-ver15.0.0/jqwidgets/jqxgrid.export.js').wait()
             .script('x_controle_botoes.js?nocache=1.1').wait()
             .script('js/principal.js?nocache='+Math.random()).wait()
     </script>

@@ -25,7 +25,7 @@
                         </fieldset>
                     </div>
 
-                    <div class="col s3">
+                    <div class="col s2">
                         <fieldset>
                             <legend>Selecione:</legend>
                             <select id="tipo_lancamento">
@@ -34,8 +34,11 @@
                             </select>
                         </fieldset>
                     </div>
-                    <div class="col s3">
+                    <div class="col s2">
                         <button class="btn waves-effect waves-light" id="btn_buscar">BUSCAR</button>
+                    </div>
+                    <div class="col s2">
+                        <button class="btn waves-effect waves-light" id="btn_imprimir">Imprimir</button>
                     </div>
                 </div>
             </div>

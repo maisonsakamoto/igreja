@@ -1,3 +1,12 @@
+
+<?php
+session_start();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+?>
 <div class="row">
     <div class="col s12">
         <div class="font01">LANÇAMENTOS DE DESPESAS</div>

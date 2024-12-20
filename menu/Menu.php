@@ -17,7 +17,8 @@
                 <li><a href="javascript:principal.abrirPagina('x-despesas/despesas.php');">Despesas</a></li>
                 <li><a href="javascript:principal.abrirPagina('x-receitas/receitas.php');">Receitas</a></li>
                 <li><a href="javascript:principal.abrirPagina('x-relatorios/relatorios.php');">Relatórios</a></li>
-                <!--<li><a href="javascript:principal.abrirPagina('testes.php');">T E S T E S</a></li>-->
+                <li><b>Configurações</b></li>
+                <li><a href="logout.php">Sair</a></li>
             </ul>
         </div>
     </div>

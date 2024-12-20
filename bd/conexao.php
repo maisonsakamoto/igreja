@@ -2,6 +2,7 @@
 class OpenDB{
 
     public $link;
+    public $conn;
 
     public function server(){
 
@@ -17,6 +18,7 @@ class OpenDB{
            exit;
         }
 
+        $this->conn = $id;
         $this->link = $id;
         return $id;
     }

@@ -3,12 +3,14 @@
  */
 /// <reference path="../js/reference.js" />
 
-var Lancamentos = class Lancamentos {
+var Despesas = class Despesas {
+    col_altura = principal.altura_pagina-115;
 
     constructor() {
         this.eventos();
-        this.carregarLancamentos();
+        this.carregarDespesas();
         this.selectedLancamentoId = null;
+        $(".colunas").css('height', principal.altura_pagina-110);
     }
 
     eventos() {
@@ -30,16 +32,16 @@ var Lancamentos = class Lancamentos {
         const $tela = $('#novoLancamentoForm').clone();
 
         $tela.find('#valor').setMask();
-        $tela.dialog({ title: 'Novo Lançamento', modal: true, width: 550,
+        $tela.dialog({ title: 'Nova Despesa', modal: true, width: 550,
             open: function() {
-                const $ajax = custom.ajaxAsync({}, 'getGrupos', 'x-plano-contas/col_plano_contas.php');
+                const $ajax = custom.ajaxAsync({grupoTipo: 'D'}, 'getGruposTipo', 'x-plano-contas/col_plano_contas.php');
                 $ajax.always(function(data, status) {
                     if (status == 'success') { that.renderizarGrupos($tela, data); }
                     else { custom.informe('Erro ao carregar grupos: ' + data.responseText); }
                 });
             },
             buttons: {
-                'Salvar': () => { that.inserirLancamento($tela); },
+                'Salvar': () => { that.inserirDespesa($tela); },
                 'Cancelar': () => { $tela.dialog('close'); }
             },
             close: () => { $tela.dialog('destroy').remove(); }
@@ -75,7 +77,7 @@ var Lancamentos = class Lancamentos {
         });
     }
 
-    inserirLancamento($tela) {
+    inserirDespesa($tela) {
         const that = this;
         const contaId = $tela.find('#contaSelect').val();
         const dataEmissao = $tela.find('#dataEmissao').val();
@@ -100,17 +102,17 @@ var Lancamentos = class Lancamentos {
         }
 
         var obj = { dataEmissao: dataEmissao, descricao: descricao, valor: valor, contaId: contaId };
-        var $ajax = custom.ajaxAsync(obj, 'novoLancamento', 'x-lancamentos/col_lancamentos.php');
+        var $ajax = custom.ajaxAsync(obj, 'novaDespesa', 'x-despesas/col_despesas.php');
         $ajax.always(function(json, status) {
-            if (status == 'success') { that.carregarLancamentos(); }
+            if (status == 'success') { that.carregarDespesas(); }
             else { custom.informe('Erro ao criar novo lançamento: ' + json.responseText); }
             $tela.dialog('close');
         });
     }
 
-    carregarLancamentos() {
+    carregarDespesas() {
         const that = this;
-        const $ajax = custom.ajaxAsync({}, 'getLancamentos', 'x-lancamentos/col_lancamentos.php');
+        const $ajax = custom.ajaxAsync({}, 'getLancamentos', 'x-despesas/col_despesas.php');
         $ajax.always(function(data, status) {
             if (status == 'success') { that.renderizarLancamentos(data); }
             else { custom.informe('Erro ao carregar lançamentos: ' + data.responseText); }
@@ -128,8 +130,10 @@ var Lancamentos = class Lancamentos {
             { name: 'conta_nome'      , type: 'string' },
             { name: 'grupo_nome'      , type: 'string' }
         ];
+
         $grid_lancamentos.jqxGrid({
-            width: '100%', height: '100%', source: new $.jqx.dataAdapter({ localdata: lancamentos, datafields: datafields }),
+            width: '100%', source: new $.jqx.dataAdapter({ localdata: lancamentos, datafields: datafields }),
+            height: that.col_altura,
             selectionmode: 'row', // MODO DE SELECAO 'singlecell', 'none', 'row' // TIPOS DE SELEÇÃO
             columnsresize: true,  // Habilitar redimensionamento de colunas
             sortable: true,       // Habilitar ordenação
@@ -169,11 +173,11 @@ var Lancamentos = class Lancamentos {
 
         custom.confirme('Tem certeza que deseja excluir este lançamento?', function() {
             const obj = { lancamentoId: that.selectedLancamentoId };
-            const $ajax = custom.ajaxAsync(obj, 'excluirLancamento', 'x-lancamentos/col_lancamentos.php');
+            const $ajax = custom.ajaxAsync(obj, 'excluirLancamento', 'x-despesas/col_despesas.php');
             $ajax.always(function(json, status) {
                 if (status == 'success') {
                     custom.informe('Lançamento excluído com sucesso');
-                    that.carregarLancamentos();
+                    that.carregarDespesas();
                 } else {
                     custom.informe('Erro ao excluir lançamento: ' + json.responseText);
                 }
@@ -182,4 +186,4 @@ var Lancamentos = class Lancamentos {
     }
 }
 
-var lancamentos = new Lancamentos();
+var despesas = new Despesas();

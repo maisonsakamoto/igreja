@@ -35,18 +35,25 @@ class ColLancamentos {
         }
     }
 
-    public function getLancamentos() {
+    public function getRelatorios() {
+        $obj = (object) $_REQUEST['obj'];
+        $dataInicio = $obj->data_inicial;
+        $dataFim = $obj->data_final;
+        $tp_lancamento = $obj->tipo_lancamento;
         $query = "SELECT
                         l.lanc_id,
                         l.lanc_dt_emissao,
                         l.lanc_descricao,
                         l.lanc_valor,
                         c.conta_nome,
-                        g.grupo_nome
+                        g.grupo_nome,
+                        l.lanc_tipo
                         FROM plano_contas_lancamento l
                     LEFT JOIN plano_contas_conta c ON c.id_contas = l.lanc_conta
                     LEFT JOIN plano_contas_grupo g ON g.id_grupo = c.grupo
-                    ORDER BY lanc_dt_emissao DESC limit 1000";
+                    WHERE l.lanc_dt_emissao BETWEEN '$dataInicio' AND '$dataFim'
+                    AND l.lanc_tipo = '$tp_lancamento'
+                    ORDER BY lanc_dt_emissao";
         $stmt = mysqli_prepare($this->link, $query);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);

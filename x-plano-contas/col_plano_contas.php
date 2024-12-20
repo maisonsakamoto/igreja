@@ -27,11 +27,28 @@ class PlanoContas {
         return $grupos;
     }
 
+    public function getGruposTipo() {
+        $obj = (object) $_REQUEST['obj'];
+        $query = "SELECT * FROM plano_contas_grupo WHERE grupo_tipo = ? ORDER BY id_grupo, grupo_nome";
+        $stmt = mysqli_prepare($this->link, $query);
+        mysqli_stmt_bind_param($stmt, "s", $obj->grupoTipo);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $grupos = array();
+        while ($row = mysqli_fetch_assoc($result)) {
+            $grupos[] = $row;
+        }
+
+        return $grupos;
+    }
+
     public function novoGrupo() {
         $nome = $_REQUEST['nome'];
-        $query = "INSERT INTO plano_contas_grupo (grupo_nome) VALUES (UPPER(?))";
+        $grupoTipo = $_REQUEST['grupoTipo'];
+        $query = "INSERT INTO plano_contas_grupo (grupo_nome, grupo_tipo) VALUES (UPPER(?), ?)";
         $stmt = mysqli_prepare($this->link, $query);
-        mysqli_stmt_bind_param($stmt, "s", $nome);
+        mysqli_stmt_bind_param($stmt, "ss", $nome, $grupoTipo);
         $success = mysqli_stmt_execute($stmt);
 
         if ($success) {
@@ -77,9 +94,10 @@ class PlanoContas {
     public function editarGrupo() {
         $id = $_REQUEST['id'];
         $nome = $_REQUEST['nome'];
-        $query = "UPDATE plano_contas_grupo SET grupo_nome = ? WHERE id_grupo = ?";
+        $grupoTipo = $_REQUEST['grupoTipo'];
+        $query = "UPDATE plano_contas_grupo SET grupo_nome = ?, grupo_tipo = ? WHERE id_grupo = ?";
         $stmt = mysqli_prepare($this->link, $query);
-        mysqli_stmt_bind_param($stmt, "si", $nome, $id);
+        mysqli_stmt_bind_param($stmt, "ssi", $nome, $grupoTipo, $id);
         mysqli_stmt_execute($stmt);
         return mysqli_stmt_affected_rows($stmt) > 0;
     }

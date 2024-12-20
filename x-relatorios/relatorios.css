@@ -1,0 +1,22 @@
+#relatorios {
+    line-height: 0px;
+}
+fieldset input, fieldset select {
+    position: relative;
+    top: 5px;
+    width: 100%;
+}
+.input-field * {
+    width: 100%;
+}
+.font01 {
+    background-color: black;
+    height: 20px;
+    border: 1px;
+    font-family: verdana;
+    font-size: 10px;
+    color: white;
+    font-weight: bold;
+    list-style: none;
+    line-height: 20px;
+}
